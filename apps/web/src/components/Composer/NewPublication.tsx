@@ -40,7 +40,7 @@ import {
   useCreatePostTypedDataMutation,
   useCreatePostViaDispatcherMutation
 } from 'lens';
-import { $getRoot } from 'lexical';
+import { $getRoot, COMMAND_PRIORITY_CRITICAL, COMMAND_PRIORITY_EDITOR, COMMAND_PRIORITY_HIGH, COMMAND_PRIORITY_LOW, COMMAND_PRIORITY_NORMAL, KEY_ENTER_COMMAND, MOVE_TO_END } from 'lexical';
 import dynamic from 'next/dynamic';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
@@ -111,6 +111,7 @@ const NewPublication: FC<Props> = ({ publication }) => {
   const isAudioPublication = ALLOWED_AUDIO_TYPES.includes(attachments[0]?.type);
 
   const onCompleted = () => {
+    console.log('Completed');
     editor.update(() => {
       $getRoot().clear();
     });
@@ -316,6 +317,7 @@ const NewPublication: FC<Props> = ({ publication }) => {
         }
       }
 
+      console.log(publicationContent);
       if (publicationContent.length === 0 && attachments.length === 0) {
         return setPublicationContentError(`${isComment ? 'Comment' : 'Post'} should not be empty!`);
       }
@@ -416,6 +418,24 @@ const NewPublication: FC<Props> = ({ publication }) => {
     setAttachments([...attachments, attachment]);
   };
 
+  editor.registerCommand(
+    KEY_ENTER_COMMAND,
+    (payload) => {
+      const event: KeyboardEvent | null = payload;
+      event?.preventDefault();
+      console.log(event?.key == 'Enter' && event?.ctrlKey);
+      if (event?.key == 'Enter' && event?.ctrlKey) {
+        createPublication();
+        console.log('posting');
+      }
+      return false;
+    },
+    COMMAND_PRIORITY_NORMAL
+  );
+
+  useEffect(() => {
+    console.log(publicationContent);
+  }, [publicationContent]);
   return (
     <Card className={clsx({ 'border-none rounded-none': !isComment }, 'pb-3')}>
       {error && <ErrorMessage className="mb-3" title="Transaction failed!" error={error} />}
