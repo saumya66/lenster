@@ -28,6 +28,8 @@ module.exports = withTM(
     },
     async redirects() {
       return [
+        { source: '/u/:handle(.+).lens', destination: '/u/:handle', permanent: true },
+        { source: '/u/:handle(.+).test', destination: '/u/:handle', permanent: true },
         {
           source: '/discord',
           destination: 'https://discord.com/invite/B8eKhSSUwX',
@@ -46,7 +48,6 @@ module.exports = withTM(
           source: '/(.*)',
           headers: [
             { key: 'X-Content-Type-Options', value: 'nosniff' },
-            { key: 'X-Frame-Options', value: 'DENY' },
             { key: 'X-XSS-Protection', value: '1; mode=block' },
             { key: 'Referrer-Policy', value: 'strict-origin' }
           ]

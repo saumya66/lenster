@@ -25,7 +25,6 @@ export const SERVERLESS_URL = getEnvConfig().serverlessEndpoint;
 export const API_URL = getEnvConfig().apiEndpoint;
 export const LENSHUB_PROXY = getEnvConfig().lensHubProxyAddress;
 export const LENS_PERIPHERY = getEnvConfig().lensPeripheryAddress;
-export const FREE_COLLECT_MODULE = getEnvConfig().freeCollectModuleAddress;
 export const DEFAULT_COLLECT_TOKEN = getEnvConfig().defaultCollectToken;
 
 export const IS_MAINNET = API_URL === MAINNET_API_URL;
@@ -48,6 +47,8 @@ export const GIT_COMMIT_SHA = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.sli
 export const CONTACT_EMAIL = 'support@lenster.xyz';
 export const RELAY_ON = true;
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+export const LENSPROTOCOL_HANDLE = 'lensprotocol';
+export const HANDLE_SUFFIX = IS_MAINNET ? '.lens' : '.test';
 
 // Messages
 export const ERROR_MESSAGE = 'Something went wrong!';
@@ -115,4 +116,9 @@ export const LS_KEYS = {
   TRANSACTION_STORE: 'transaction.store',
   TIMELINE_STORE: 'timeline.store',
   MESSAGE_STORE: 'message.store'
+};
+
+// S3 bucket
+export const S3_BUCKET = {
+  LENSTER_MEDIA: 'lenster-media'
 };
